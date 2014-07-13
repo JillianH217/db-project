@@ -106,4 +106,25 @@ create table visits (
   foerign key (adminoutID) references workers (workerID)
 );
 
+create table diagnoses (
+  diagnosesID int,
+  title text,
+  description text,
+  pin int,
+  workerID int,
+  primary key (diagnosesID),
+  foreign key (pin) references patient (pin),
+  foreign key (workerID) references workers (workerID)
+);
 
+create table outpatient (
+  pin int,
+  workerID int,
+  diagnosesID int,
+  visitID int,
+  primary key (pin, workerID, diagnosesID, visitID)
+  foreign key (pin) references patient (pin),
+  foreign key (workerID) references workers (workerID),
+  foreign key (diagnosesID) references diagnoses (diagnosesID),
+  foreign key (visitD) references visits (visitID)
+);
