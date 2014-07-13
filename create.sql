@@ -1,7 +1,7 @@
 create table workers (
 	workerID int,
 	firstname text,
-	middlename text,
+	middleinit text,
 	lastname text,
 	hiredate text,
 	jobID int,
@@ -15,10 +15,9 @@ create table jobs (
 	primary key (jobID)
 );
 
-create table privileges (
+create table admitprivileges (
 	workerID int,
-	admitprivileges boolean,
-	primary key (workerID, admitprivileges)
+	primary key (workerID)
 	foreign key (workerID), references workers (workerID)
 );
 
@@ -44,7 +43,8 @@ create table treatments (
   administeredby int,
   serviceID int,
   treatmenttype text,
-  timestamp text,
+  timestarted text,
+  timefinished text,
   primary key (treatmentID),
   foreign key (pin) references patient (pin),
   foreign key (docordered) references workers (workerID),
@@ -61,11 +61,12 @@ create table services (
 create table workedon (
   treatmentID int,
   workerID int,
-  timestamp text,
+  timedone text,
+  action text,
   primary key (treatmentID, workerID, timestamp)
 );
 
-create table patient (
+create table patients (
   pin int,
   firstname text,
   lastname text,
@@ -75,19 +76,19 @@ create table patient (
 create table inpatient (
   pin int,
   roomID int,
-  diagnosesID int,
+  diagnosisID int,
   visitID int,
   emercontact text,
   inspolicy text,
   primarydoc int,
-  primary key (visitID, pin, roomid, diagnosesID),
+  primary key (visitID, pin, roomid, diagnosisID),
   foreign key (pin) references patient (pin),
   foreign key (roomID) references rooms (roomID),
-  foreign key (diagnosesID) references diagnoses (diagnosesID),
+  foreign key (diagnosisID) references diagnoses (diagnosisID),
   foreign key (visitID) references visits (visitID)
 );
 
-create table room (
+create table rooms (
   roomID int,
   floor int,
   quadrant int,
@@ -107,12 +108,12 @@ create table visits (
 );
 
 create table diagnoses (
-  diagnosesID int,
+  diagnosisID int,
   title text,
   description text,
   pin int,
   workerID int,
-  primary key (diagnosesID),
+  primary key (diagnosisID),
   foreign key (pin) references patient (pin),
   foreign key (workerID) references workers (workerID)
 );
@@ -120,11 +121,11 @@ create table diagnoses (
 create table outpatient (
   pin int,
   workerID int,
-  diagnosesID int,
+  diagnosisID int,
   visitID int,
-  primary key (pin, workerID, diagnosesID, visitID)
+  primary key (pin, workerID, diagnosisID, visitID)
   foreign key (pin) references patient (pin),
   foreign key (workerID) references workers (workerID),
-  foreign key (diagnosesID) references diagnoses (diagnosesID),
+  foreign key (diagnosisID) references diagnoses (diagnosisID),
   foreign key (visitD) references visits (visitID)
 );
