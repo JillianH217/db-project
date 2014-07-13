@@ -1,0 +1,15 @@
+drop table places;
+drop table workat;
+drop table workers;
+drop table jobs;
+drop table privileges;
+drop table services;
+drop table treatments;
+drop table workedon;
+drop table secondarydoctors;
+drop table inpatient;
+drop table rooms;
+drop table patients;
+drop table outpatients;
+drop table diagnoses;
+drop table visits;
