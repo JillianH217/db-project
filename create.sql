@@ -17,8 +17,8 @@ create table jobs (
 
 create table admitprivileges (
 	workerID int,
-	primary key (workerID)
-	foreign key (workerID), references workers (workerID)
+	primary key (workerID),
+	foreign key (workerID) references workers (workerID)
 );
 
 create table workat (
@@ -49,7 +49,7 @@ create table treatments (
   foreign key (pin) references patient (pin),
   foreign key (docordered) references workers (workerID),
   foreign key (administeredby) references workers (workerID),
-  foreign key (serviceID) references services (serviceID),
+  foreign key (serviceID) references services (serviceID)
 );
 
 create table services (
@@ -63,7 +63,7 @@ create table workedon (
   workerID int,
   timedone text,
   action text,
-  primary key (treatmentID, workerID, timestamp)
+  primary key (treatmentID, workerID, timedone)
 );
 
 create table patients (
@@ -104,7 +104,7 @@ create table visits (
   timestampout text,
   primary key(visitID),
   foreign key (admininID) references workers (workerID),
-  foerign key (adminoutID) references workers (workerID)
+  foreign key (adminoutID) references workers (workerID)
 );
 
 create table diagnoses (
@@ -127,5 +127,13 @@ create table outpatient (
   foreign key (pin) references patient (pin),
   foreign key (workerID) references workers (workerID),
   foreign key (diagnosisID) references diagnoses (diagnosisID),
-  foreign key (visitD) references visits (visitID)
+  foreign key (visitID) references visits (visitID)
+);
+
+create table secondarydoctors (
+  workerID int,
+  visitID int,
+  primary key (workerID, visitID),
+  foreign key (workerID) references workers (workerID),
+  foreign key (visitID) references visits (visitID)
 );
